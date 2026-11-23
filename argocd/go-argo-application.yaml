@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+
+metadata:
+  name: go-argo-application
+  namespace: argocd
+
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/zablon-oigo/go-app-kubernetes-argocd.git
+    targetRevision: HEAD
+    path: .
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: go-app
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
